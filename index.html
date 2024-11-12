@@ -243,12 +243,11 @@
             const minutesLeftInYear = Math.floor((endOfYear - now) / 60000);
 
             document.getElementById('center-text').innerHTML = `
-                <span class="highlight">${minutesLeftToday}</span> <br> <span class="brand">1440X</span>
+                <span class="highlight">${minutesLeftToday}</span><br><span class="brand">1440X</span>
             `;
 
-            document.getElementById('year-minutes').innerHTML = `
-                ${minutesLeftInYear.toLocaleString()}
-            `;
+            document.getElementById('year-minutes').innerHTML = 
+                `${minutesLeftInYear.toLocaleString()}`;
 
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             document.getElementById('date-display').textContent = `${months[now.getMonth()]} ${now.getDate()}`;
