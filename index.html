@@ -1,0 +1,57 @@
+// Clock functionality
+function updateClock() {
+    const now = new Date();
+    const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+    
+    const minutesLeftToday = Math.floor((endOfDay - now) / 60000);
+    const minutesLeftInYear = Math.floor((endOfYear - now) / 60000);
+
+    document.getElementById('center-text').innerHTML = `
+        <span class="highlight">${minutesLeftToday}</span> <br> <span class="brand">1440X</span>
+    `;
+
+    document.getElementById('year-minutes').innerHTML = `
+        ${minutesLeftInYear.toLocaleString()}
+    `;
+
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    document.getElementById('date-display').textContent = `${months[now.getMonth()]} ${now.getDate()}`;
+
+    const millisInDay = now.getHours() * 3600000 + now.getMinutes() * 60000 + now.getSeconds() * 1000 + now.getMilliseconds();
+    const rotation = (millisInDay / (24 * 60 * 60 * 1000)) * 360;
+    document.getElementById('day-hand').style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+
+    const timeString = now.toLocaleTimeString();
+    document.getElementById('time-display').textContent = timeString;
+
+    const monthElements = document.querySelectorAll('.month');
+    monthElements.forEach((element, index) => {
+        if (index === now.getMonth()) {
+            element.style.color = index === 0 ? '#00FF41' : '#007FFF';
+        } else {
+            element.style.color = index === 0 ? '#00FF41' : 'yellow';
+        }
+    });
+}
+
+function createClockFace() {
+    const clock = document.getElementById('clock');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    months.forEach((month, index) => {
+        const monthElement = document.createElement('div');
+        monthElement.className = 'month' + (index === 0 ? ' january' : '');
+        monthElement.textContent = month;
+        monthElement.style.transform = `rotate(${index * 30}deg)`;
+        if (index === 0) {
+            monthElement.style.textShadow = '0 0 5px #00FF41';
+        }
+        clock.appendChild(monthElement);
+    });
+}
+
+// Initialize clock
+createClockFace();
+updateClock();
+setInterval(updateClock, 50);
